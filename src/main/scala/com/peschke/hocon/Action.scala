@@ -32,7 +32,7 @@ object Action {
       actions match {
         case Seq() => ()
         case current +: rest => current match {
-          case Combine(configs) => loop(rest, Merge(configs).withFallback(config))
+          case Combine(configs) => loop(rest, Merge(configs).withFallback(config).resolve)
           case Query(queries) =>
             queries.map(config.getValue).map(Render(_, mode)).foreach(print)
             loop(rest, config)
