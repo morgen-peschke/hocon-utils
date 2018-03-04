@@ -36,7 +36,7 @@ object CliOpts {
   def addAction(a: Action) = GenLens[CliOpts](_.actions).modify(_ :+ a)
 
   val parser: OptionParser[CliOpts] =
-    new OptionParser[CliOpts]("hocon-utils") {
+    new OptionParser[CliOpts](s"java -jar ${BuildInfo.name}") {
       opt[Seq[File]]('c', "config")
         .required
         .unbounded
@@ -73,12 +73,14 @@ object CliOpts {
 
       opt[Render.Mode]('f', "format")
         .optional
-        .text(s"Format used to display configs, defaults to ${DefaultRenderMode.entryName} one of: " +
-          Render.Mode.values.map(_.entryName).mkString(" ") + " - this is a global setting.")
+        .text(s"Format used to display configs, this is a global setting. Defaults to ${DefaultRenderMode.entryName}, must be one of: ${Render.Mode.values.map(_.entryName).mkString(" ")}")
         .action((m, opts) => opts.lens(_.renderMode).set(m))
 
       note("")
       help("help")
+
+      note("")
+      note(s"version: ${BuildInfo.version}")
 
       override def showUsageOnError = true
     }

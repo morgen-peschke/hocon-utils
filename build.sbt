@@ -3,8 +3,13 @@ inThisBuild(Seq(
   name         := "hocon-utils",
   organization := "com.github.morgen-peschke",
   scalaOrganization := "org.typelevel",
-  scalaVersion      := "2.12.4-bin-typelevel-4"
+  scalaVersion      := "2.12.4-bin-typelevel-4",
+  assemblyJarName   := "hocon-utils.jar"
 ))
+
+enablePlugins(BuildInfoPlugin)
+buildInfoKeys    := Seq[BuildInfoKey](name, version)
+buildInfoPackage := "com.peschke.hocon"
 
 scalacOptions ++= Seq(
   "-encoding",
